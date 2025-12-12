@@ -11,6 +11,7 @@ type FormButtonProps = {
   className?: string;
   icon?: React.ReactNode;
   iconPosition?: "left" | "right";
+  ariaLabel?: string;
 };
 
 export default function FormButton({
@@ -21,6 +22,7 @@ export default function FormButton({
   className,
   icon,
   iconPosition = "right",
+  ariaLabel
 }: FormButtonProps) {
   const baseStyles = clsx(
     "rounded-xl font-medium flex items-center justify-center gap-2 transition-all duration-200",
@@ -40,6 +42,8 @@ export default function FormButton({
       type={type}
       onClick={onClick}
       className={clsx(baseStyles, variantStyles[variant], className)}
+      aria-label={ariaLabel}
+      aria-live="polite"
     >
       {icon && iconPosition === "left" && icon}
       <span className="whitespace-nowrap">{children}</span>

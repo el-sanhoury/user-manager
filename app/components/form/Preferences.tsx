@@ -81,6 +81,10 @@ export default function Preferences({ data, updateFields, onValid }: Props) {
               options={categories}
               placeholder="Select category"
               error={errors.category?.message}
+              aria-labelledby={name}
+              aria-required={true}
+              aria-invalid={!!errors[name]}
+              aria-describedby={errors[name] ? `${name}-error` : undefined}
             />
           )}
         />
@@ -102,6 +106,10 @@ export default function Preferences({ data, updateFields, onValid }: Props) {
               placeholder="Select country"
               error={errors.interests?.message}
               isMulti={true}
+              aria-labelledby={name}
+              aria-required={true}
+              aria-invalid={!!errors[name]}
+              aria-describedby={errors[name] ? `${name}-error` : undefined}
             />
           )}
         />

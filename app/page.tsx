@@ -40,7 +40,8 @@ export default function Page() {
       <div className="max-w-4xl mx-auto px-3 ">
         <Stepper step={step} onChange={setStep} />
 
-        <div className="bg-white p-8 rounded-xl shadow-lg">
+        <div className="bg-white p-8 rounded-xl shadow-lg" aria-live="polite"
+>
           {step === 1 && (
             <PersonalInformation
               defaultValues={{
@@ -77,6 +78,7 @@ export default function Page() {
                 onClick={prevStep}
                 icon={<ChevronLeft size={24} />}
                 iconPosition="left"
+                ariaLabel="Back"
               >
                 Back
               </FormButton>
@@ -96,6 +98,7 @@ export default function Page() {
                 }}
                 icon={<ChevronRight size={24} />}
                 iconPosition="right"
+                ariaLabel="Go to next step"
               >
                 Next Step
               </FormButton>
@@ -108,6 +111,7 @@ export default function Page() {
                 }}
                 icon={<ChevronRight size={24} />}
                 iconPosition="right"
+                ariaLabel="Submit"
               >
                 Submit
               </FormButton>

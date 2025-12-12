@@ -28,20 +28,19 @@ export default function Stepper({ step, onChange }: StepperProps) {
         transition={{ duration: 0.28 }}
       />
 
-      <div className="flex justify-between items-center w-full relative z-10">
+      <div className="flex justify-between items-center w-full relative z-10" role="list">
         {steps.map((s) => {
           const isDone = s.id < step;
           const isActive = s.id === step;
 
           return (
-            <div
-              key={s.id}
-              className="flex flex-col items-center bg-gray-50 "
-            >
+            <div key={s.id} className="flex flex-col items-center bg-gray-50" role="listitem">
               <button
                 onClick={() => onChange(s.id)}
                 aria-current={isActive ? "step" : undefined}
                 className="flex flex-col items-center gap-2 focus:outline-none"
+                aria-label={`Go to step ${s.label}`}
+                aria-describedby={`step-${s.id}-label`}
               >
                 <AnimatePresence mode="wait">
                   {isDone ? (
@@ -87,6 +86,7 @@ export default function Stepper({ step, onChange }: StepperProps) {
                 </AnimatePresence>
 
                 <span
+                  id={`step-${s.id}-label`}
                   className={`text-sm font-medium text-slate-600 ${
                     isActive
                       ? "text-green-700 font-semibold"

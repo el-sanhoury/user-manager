@@ -80,6 +80,7 @@ export default function PersonalInformation({
               ? "border-red-500"
               : "focus:border-green-700 focus:ring-1 focus:ring-green-700"
           }`}
+          aria-invalid={!!errors.name}
         />
         {errors.name && (
           <p className="text-red-500 text-sm">{errors.name.message}</p>
@@ -102,6 +103,7 @@ export default function PersonalInformation({
               ? "border-red-500"
               : "focus:border-green-700 focus:ring-1 focus:ring-green-700"
           }`}
+          aria-invalid={!!errors.name}
         />
         {errors.email && (
           <p className="text-red-500 text-sm">{errors.email.message}</p>
@@ -163,6 +165,7 @@ export default function PersonalInformation({
               ? "border-red-500"
               : "focus:border-green-700 focus:ring-1 focus:ring-green-700"
           }`}
+          aria-invalid={!!errors.name}
         />
 
         {errors.age && (
@@ -172,7 +175,7 @@ export default function PersonalInformation({
       </div>
 
       {/* Hidden submit: used only by NEXT BUTTON */}
-      <button type="submit" className="hidden"></button>
+      <button type="submit" className="hidden" aria-hidden="true"></button>
     </form>
   );
 }

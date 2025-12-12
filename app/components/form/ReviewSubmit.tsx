@@ -18,7 +18,11 @@ export default function ReviewSubmit({ data }: Props) {
       <h3 className="text-2xl font-bold mb-6">Review & Submit</h3>
 
       {/* CARD */}
-      <div className="bg-slate-50 p-6 rounded-xl mb-['24px']">
+      <div
+        className="bg-slate-50 p-6 rounded-xl"
+        role="region"
+        aria-labelledby="user-summary-title"
+      >
         <h4 className="text-lg font-semibold mb-4">User Summary</h4>
 
         <div className="divide-y divide-[#dce6f2]">
@@ -74,7 +78,6 @@ export default function ReviewSubmit({ data }: Props) {
       {/* READY MESSAGE */}
       <div className="bg-green-50 border border-green-200 rounded-xl p-4 mt-6">
         <div className="flex items-start">
-          
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -92,7 +95,7 @@ export default function ReviewSubmit({ data }: Props) {
             <path d="m9 11 3 3L22 4"></path>
           </svg>
 
-          <div>
+          <div role="region" aria-labelledby="ready-message-title" aria-live="polite">
             {/* <p>Ready to submit</p> */}
             <p className="text-green-800 font-medium">Ready to submit</p>
             {/* <br /> */}
