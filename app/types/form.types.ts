@@ -2,7 +2,7 @@ import { PersonalInfoType } from "@/app/components/form/schemas/personal.schema"
 
 export type PreferencesType = {
   category: string;
-  interests: string; // single select (string)
+  interests: string[]; 
   avatar?: File | null;
 };
 

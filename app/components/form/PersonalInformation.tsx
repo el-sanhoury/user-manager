@@ -39,10 +39,7 @@ export default function PersonalInformation({
   }, [watch, updateFields]);
 
   return (
-    <form
-      onSubmit={handleSubmit(onValid)}
-      className="bg-white p-6 rounded-xl shadow space-y-4"
-    >
+    <form onSubmit={handleSubmit(onValid)} className="space-y-6">
       <h3 className="text-2xl font-bold mb-6">Personal Information</h3>
 
       {/* Full Name */}
@@ -113,7 +110,10 @@ export default function PersonalInformation({
 
       {/* Country */}
       <div className="space-y-1">
-        <label className="font-medium">Country (Optional)</label>
+        <label className="block text-sm font-medium mb-2">
+          {" "}
+          Country (Optional){" "}
+        </label>
         <select
           {...register("country")}
           className={` w-full px-4 py-3 rounded-xl outline-none border border-gray-300 transition-all `}

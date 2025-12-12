@@ -6,6 +6,8 @@ import PersonalInformation from "./components/form/PersonalInformation";
 import Preferences from "./components/form/Preferences";
 import ReviewSubmit from "./components/form/ReviewSubmit";
 import { FormDataType } from "./types/form.types";
+import FormButton from "./components/ui/FormButton";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export default function Page() {
   const [step, setStep] = useState(1);
@@ -17,7 +19,7 @@ export default function Page() {
     country: "",
 
     category: "",
-    interests: "",
+    interests: [],
     avatar: null,
   });
 
@@ -29,73 +31,89 @@ export default function Page() {
   const prevStep = () => setStep((s) => s - 1);
 
   return (
-    <div className="max-w-4xl mx-auto p-6 space-y-6">
-      <h4 className="text-amber-400 font-black uppercase">Challenge</h4>
-      <h2 className="text-3xl font-bold mb-8">Live Multi-Step Form</h2>
-      <Stepper step={step} onChange={setStep} />
+    <div>
+      <div className="max-w-7xl mx-auto px-3">
+        <h4 className="text-amber-400 font-black uppercase">Challenge</h4>
+        <h2 className="text-3xl font-bold mb-8">Live Multi-Step Form</h2>
+      </div>
 
-      {step === 1 && (
-        <PersonalInformation
-          defaultValues={{
-            name: formData.name,
-            email: formData.email,
-            gender: formData.gender,
-            age: formData.age,
-            country: formData.country,
-          }}
-          updateFields={updateFields}
-          onValid={nextStep}
-        />
-      )}
+      <div className="max-w-4xl mx-auto ">
+        <Stepper step={step} onChange={setStep} />
 
-      {step === 2 && (
-        <Preferences
-          data={{
-            category: formData.category,
-            interests: formData.interests,
-            avatar: formData.avatar,
-          }}
-          updateFields={updateFields}
-          onValid={nextStep}
-        />
-      )}
+        <div className="bg-white p-8 rounded-xl shadow-subtle">
+          {step === 1 && (
+            <PersonalInformation
+              defaultValues={{
+                name: formData.name,
+                email: formData.email,
+                gender: formData.gender,
+                age: formData.age,
+                country: formData.country,
+              }}
+              updateFields={updateFields}
+              onValid={nextStep}
+            />
+          )}
 
-      {step === 3 && <ReviewSubmit data={formData} />}
+          {step === 2 && (
+            <Preferences
+              data={{
+                category: formData.category,
+                interests: formData.interests,
+                avatar: formData.avatar,
+              }}
+              updateFields={updateFields}
+              onValid={nextStep}
+            />
+          )}
 
-      {/* Buttons */}
-      <div className="flex justify-between pt-4">
-        {step > 1 ? (
-          <button className="px-4 py-2 border rounded" onClick={prevStep}>
-            Back
-          </button>
-        ) : (
-          <div />
-        )}
+          {step === 3 && <ReviewSubmit data={formData} />}
 
-        {step < 3 ? (
-          <button
-            className="px-4 py-2 bg-blue-600 text-white rounded"
-            onClick={() => {
-              (
-                document.querySelector(
-                  "form button[type=submit]"
-                ) as HTMLButtonElement
-              )?.click();
-            }}
-          >
-            Next Step
-          </button>
-        ) : (
-          <button
-            className="px-4 py-2 bg-green-600 text-white rounded"
-            onClick={() => {
-              console.log("Submitting final data:", formData);
-              alert("Form submitted! Check console for data.");
-            }}
-          >
-            Submit
-          </button>
-        )}
+          {/* Buttons */}
+          <div className="flex justify-between mt-8 pt-6 border-t border-slate-200">
+            {step > 1 ? (
+              <FormButton
+                variant="secondary"
+                onClick={prevStep}
+                icon={<ChevronLeft size={24} />}
+                iconPosition="left"
+              >
+                Back
+              </FormButton>
+            ) : (
+              <div />
+            )}
+
+            {step < 3 ? (
+              <FormButton
+                variant="success"
+                onClick={() => {
+                  (
+                    document.querySelector(
+                      "form button[type=submit]"
+                    ) as HTMLButtonElement
+                  )?.click();
+                }}
+                icon={<ChevronRight size={24} />}
+                iconPosition="right"
+              >
+                Next Step
+              </FormButton>
+            ) : (
+              <FormButton
+                variant="success"
+                onClick={() => {
+                  console.log("Submitting final data:", formData);
+                  alert("Form submitted!");
+                }}
+                icon={<ChevronRight size={24} />}
+                iconPosition="right"
+              >
+                Submit
+              </FormButton>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );
