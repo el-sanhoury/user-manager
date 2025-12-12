@@ -3,10 +3,19 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
+import { Controller } from "react-hook-form";
+
 import {
   personalInfoSchema,
   PersonalInfoType,
 } from "./schemas/personal.schema";
+import dynamic from "next/dynamic";
+
+const SearchableSelect = dynamic(() => import("./dropDown/SearchableSelect"), {
+  ssr: false,
+});
+
+// import SearchableSelect from "./dropDown/SearchableSelect";
 
 type Props = {
   defaultValues: PersonalInfoType;
@@ -22,13 +31,28 @@ export default function PersonalInformation({
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
+    control,
+    formState: { errors },
     watch,
   } = useForm<PersonalInfoType>({
     resolver: zodResolver(personalInfoSchema),
     defaultValues,
     mode: "onChange",
   });
+
+  const genders = [
+    { value: "male", label: "Male" },
+    { value: "female", label: "Female" },
+  ];
+
+  const countries = [
+    { value: "US", label: "United States" },
+    { value: "GB", label: "United Kingdom" },
+    { value: "CA", label: "Canada" },
+    { value: "AU", label: "Australia" },
+    { value: "DE", label: "Germany" },
+    // ... باقي الدول
+  ];
 
   useEffect(() => {
     const subscription = watch((values) => {
@@ -86,43 +110,41 @@ export default function PersonalInformation({
 
       {/* Gender */}
       <div className="space-y-1">
-        <label className="block text-sm font-medium mb-2">
-          Gender
-          <span className="text-red-500"> * </span>
-        </label>
-        <select
-          {...register("gender")}
-          className={` w-full px-4 py-3 rounded-xl outline-none border border-gray-300 transition-all ${
-            errors.gender
-              ? "border-red-500"
-              : "focus:border-green-700 focus:ring-1 focus:ring-green-700"
-          }`}
-        >
-          <option value="">Select gender</option>
-          <option value="male">Male</option>
-          <option value="female">Female</option>
-        </select>
-
-        {errors.gender && (
-          <p className="text-red-500 text-sm">{errors.gender.message}</p>
-        )}
+        <Controller
+          name="gender"
+          control={control}
+          render={({ field: { onChange, value, name } }) => (
+            <SearchableSelect
+              name={name}
+              required={true}
+              value={value || ""}
+              onChange={onChange}
+              label="Gender "
+              options={genders}
+              placeholder="Select gender"
+              error={errors.gender?.message}
+            />
+          )}
+        />
       </div>
 
       {/* Country */}
       <div className="space-y-1">
-        <label className="block text-sm font-medium mb-2">
-          {" "}
-          Country (Optional){" "}
-        </label>
-        <select
-          {...register("country")}
-          className={` w-full px-4 py-3 rounded-xl outline-none border border-gray-300 transition-all `}
-        >
-          <option value="">Select country</option>
-          <option value="egypt">Egypt</option>
-          <option value="ksa">Saudi Arabia</option>
-          <option value="uae">UAE</option>
-        </select>
+        <Controller
+          name="country"
+          control={control}
+          render={({ field: { onChange, value, name } }) => (
+            <SearchableSelect
+              name={name}
+              value={value || ""}
+              onChange={onChange}
+              label="Country"
+              hint="Optional"
+              options={countries}
+              placeholder="Select country"
+            />
+          )}
+        />
       </div>
 
       {/* Age */}
@@ -146,6 +168,7 @@ export default function PersonalInformation({
         {errors.age && (
           <p className="text-red-500 text-sm">{errors.age.message}</p>
         )}
+        <p className="text-sm text-slate-500 mt-2">Must be between 18-100</p>
       </div>
 
       {/* Hidden submit: used only by NEXT BUTTON */}

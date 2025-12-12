@@ -22,11 +22,14 @@ export default function FormButton({
   icon,
   iconPosition = "right",
 }: FormButtonProps) {
-  const baseStyles =
-    "px-6 py-3 rounded-xl font-medium flex items-center gap-2 transition-all duration-200";
+  const baseStyles = clsx(
+    "rounded-xl font-medium flex items-center justify-center gap-2 transition-all duration-200",
+    "px-4 py-2 text-sm",          
+    "sm:px-6 sm:py-3 sm:text-base" 
+  );
 
   const variantStyles = {
-    primary: "bg-primary-700 text-white hover:bg-primary-700",
+    primary: "bg-primary-700 text-white hover:bg-primary-800",
     secondary:
       "border border-gray-300 text-gray-800 hover:bg-gray-100 bg-white",
     success: "bg-green-700 text-white hover:bg-green-800",
@@ -39,7 +42,7 @@ export default function FormButton({
       className={clsx(baseStyles, variantStyles[variant], className)}
     >
       {icon && iconPosition === "left" && icon}
-      <span>{children}</span>
+      <span className="whitespace-nowrap">{children}</span>
       {icon && iconPosition === "right" && icon}
     </button>
   );

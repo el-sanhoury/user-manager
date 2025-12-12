@@ -37,10 +37,10 @@ export default function Page() {
         <h2 className="text-3xl font-bold mb-8">Live Multi-Step Form</h2>
       </div>
 
-      <div className="max-w-4xl mx-auto ">
+      <div className="max-w-4xl mx-auto px-3 ">
         <Stepper step={step} onChange={setStep} />
 
-        <div className="bg-white p-8 rounded-xl shadow-subtle">
+        <div className="bg-white p-8 rounded-xl shadow-lg">
           {step === 1 && (
             <PersonalInformation
               defaultValues={{
